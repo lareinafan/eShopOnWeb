@@ -71,7 +71,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: '{"clientId":"7a778338-d633-45e2-93e1-3bbe6d2bdc3b","clientSecret":"yej8Q~UBi7frY2o0AmCpHnMuXWMy9V4VU-vNnbgW","subscriptionId":"8da443ca-8590-4e4c-bc26-defea6467f50","tenantId":"8011339b-0ff0-4f23-990b-9a4e55c0b127"}'
 
       # Deploy Azure WebApp using Bicep file
       - name: deploy

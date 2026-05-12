@@ -9,11 +9,11 @@ permissions:
 
 #Environment variables https://docs.github.com/en/actions/learn-github-actions/environment-variables
 env:
-  RESOURCE-GROUP: rg-eshoponweb-eastus
+  RESOURCE-GROUP: rg-eshoponweb-labrunner5
   LOCATION: eastus
   TEMPLATE-FILE: infra/webapp.bicep
   SUBSCRIPTION-ID: 8da443ca-8590-4e4c-bc26-defea6467f50
-  WEBAPP-NAME: devops-webapp-eastus-267278865
+  WEBAPP-NAME: eshoponweb-webapp-labrunner5
 
 jobs:
   #Build, test and publish .net web project in repository

@@ -3,6 +3,10 @@ name: eShopOnWeb Build and Test
 #Triggers (uncomment line below to use it)
 on: workflow_dispatch
 
+permissions:
+  id-token: write
+  contents: read
+
 #Environment variables https://docs.github.com/en/actions/learn-github-actions/environment-variables
 env:
   RESOURCE-GROUP: rg-eshoponweb-eastus
@@ -52,8 +56,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: buildandtest
-    environment:
-      name: "Development"
     steps:
       #Download the publish files created in previous job
       - name: Download artifact from build job
@@ -69,11 +71,13 @@ jobs:
           name: bicep-template
           path: bicep-template
 
-      #Login in your azure subscription using a service principal (credentials stored as GitHub Secret in repo)
+      #Login in your azure subscription using OIDC
       - name: Azure Login
         uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          client-id: 85587581-d24b-469d-8853-be8413ad8dc7
+          tenant-id: 8011339b-0ff0-4f23-990b-9a4e55c0b127
+          subscription-id: 8da443ca-8590-4e4c-bc26-defea6467f50
 
       # Deploy Azure WebApp using Bicep file
       - name: deploy
@@ -86,9 +90,9 @@ jobs:
           failOnStdErr: false
 
       # Publish website to Azure App Service (WebApp)
-      # Step disabled due to issue where the site sometimes can't be found: https://github.com/microsoft/pipelines-appservice-lib/issues/56. Instead deploy using CLI
+      # Step disabled due to issue where the site sometimes can't be found
       - name: Publish Website to WebApp
-        if: false #Disable step due to comment above
+        if: false
         uses: Azure/webapps-deploy@v3
         with:
           type: ZIP

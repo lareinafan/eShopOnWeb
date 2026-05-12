@@ -3,10 +3,6 @@ name: eShopOnWeb Build and Test
 #Triggers (uncomment line below to use it)
 on: workflow_dispatch
 
-permissions:
-  id-token: write
-  contents: read
-
 #Environment variables https://docs.github.com/en/actions/learn-github-actions/environment-variables
 env:
   RESOURCE-GROUP: rg-eshoponweb-labrunner5
@@ -71,13 +67,11 @@ jobs:
           name: bicep-template
           path: bicep-template
 
-      #Login in your azure subscription using OIDC
+      #Login in your azure subscription using a service principal
       - name: Azure Login
         uses: azure/login@v2
         with:
-          client-id: 85587581-d24b-469d-8853-be8413ad8dc7
-          tenant-id: 8011339b-0ff0-4f23-990b-9a4e55c0b127
-          subscription-id: 8da443ca-8590-4e4c-bc26-defea6467f50
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       # Deploy Azure WebApp using Bicep file
       - name: deploy

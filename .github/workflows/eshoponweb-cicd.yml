@@ -1,8 +1,6 @@
 name: eShopOnWeb Build and Test
-
 #Triggers (uncomment line below to use it)
 on: workflow_dispatch
-
 #Environment variables https://docs.github.com/en/actions/learn-github-actions/environment-variables
 env:
   RESOURCE-GROUP: rg-eshoponweb-labrunner5
@@ -40,7 +38,6 @@ jobs:
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/app.zip
-
       # upload the bicep template as artifacts for next job
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v5
@@ -80,7 +77,7 @@ jobs:
           subscriptionId: ${{ env.SUBSCRIPTION-ID }}
           resourceGroupName: ${{ env.RESOURCE-GROUP }}
           template: bicep-template/webapp.bicep
-          parameters: "webAppName=${{ env.WEBAPP-NAME }} location=${{ env.LOCATION }}"
+          parameters: "webAppName=${{ env.WEBAPP-NAME }} location=${{ env.LOCATION }} sku=B1"
           failOnStdErr: false
 
       # Publish website to Azure App Service (WebApp)

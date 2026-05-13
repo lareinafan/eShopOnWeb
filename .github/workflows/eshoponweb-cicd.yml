@@ -49,6 +49,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: buildandtest
+    environment: Development
     steps:
       #Download the publish files created in previous job
       - name: Download artifact from build job
